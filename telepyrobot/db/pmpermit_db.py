@@ -83,9 +83,9 @@ def del_whitelist(user_id):
 
 
 def get_whitelist(user_id):
-    user = SESSION.query(PMTable).get(user_id)
-    rep = ""
-    if user:
+    if user := SESSION.query(PMTable).get(user_id):
         rep = str(user.boolvalue)
+    else:
+        rep = ""
     SESSION.close()
     return rep

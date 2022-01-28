@@ -81,7 +81,7 @@ async def down_load_media(c: TelePyroBot, m: Message):
             downloader.start(blocking=False)
             c_time = time.time()
             while not downloader.isFinished():
-                total_length = downloader.filesize if downloader.filesize else None
+                total_length = downloader.filesize or None
                 downloaded = downloader.get_dl_size()
                 display_message = ""
                 now = time.time()
@@ -90,13 +90,16 @@ async def down_load_media(c: TelePyroBot, m: Message):
                 speed = downloader.get_speed(human=True)
                 elapsed_time = round(diff) * 1000
                 progress_str = "**[{0}{1}]**\n**Progress:** __{2}%__".format(
-                    "".join(["●" for i in range(math.floor(percentage / 5))]),
-                    "".join(["○" for i in range(20 - math.floor(percentage / 5))]),
+                    "".join(["●" for _ in range(math.floor(percentage / 5))]),
+                    "".join(
+                        ["○" for i in range(20 - math.floor(percentage / 5))]
+                    ),
                     round(percentage, 2),
                 )
+
                 estimated_total_time = downloader.get_eta(human=True)
                 try:
-                    current_message = f"__**Trying to download...**__\n"
+                    current_message = '__**Trying to download...**__\n'
                     current_message += f"**URL:** `{url}`\n"
                     current_message += f"**File Name:** `{custom_file_name}`\n"
                     current_message += f"{progress_str}\n"
@@ -115,7 +118,6 @@ async def down_load_media(c: TelePyroBot, m: Message):
                     pass
                 except Exception as e:
                     LOGGER.info(str(e))
-                    pass
             if os.path.exists(download_file_path):
                 end_t = datetime.now()
                 ms = (end_t - start_t).seconds

@@ -33,15 +33,15 @@ def set_credential(chat_id, credential_string):
 def get_credential(chat_id):
     with INSERTION_LOCK:
         saved_cred = SESSION.query(gDriveCreds).get(chat_id)
-        creds = None
-        if saved_cred is not None:
-            creds = pickle.loads(saved_cred.credential_string)
-        return creds
+        return (
+            pickle.loads(saved_cred.credential_string)
+            if saved_cred is not None
+            else None
+        )
 
 
 def clear_credential(chat_id):
     with INSERTION_LOCK:
-        saved_cred = SESSION.query(gDriveCreds).get(chat_id)
-        if saved_cred:
+        if saved_cred := SESSION.query(gDriveCreds).get(chat_id):
             SESSION.delete(saved_cred)
             SESSION.commit()

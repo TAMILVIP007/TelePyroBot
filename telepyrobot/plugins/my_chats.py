@@ -37,9 +37,7 @@ async def get_chat(c: TelePyroBot, m: Message):
     await m.edit_text("`Exporting Chatlist...`")
     all_chats = db.get_all_chats()
     chatfile = "<---List of chats that you joined--->\n\n"
-    u = 0
-    for chat in all_chats:
-        u += 1
+    for u, chat in enumerate(all_chats, start=1):
         if str(chat.chat_username) != "None":
             chatfile += (
                 f"[{u}] {chat.chat_name} - ({chat.chat_id}): @{chat.chat_username}\n"

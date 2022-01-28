@@ -82,8 +82,7 @@ async def get_note(c: TelePyroBot, m: Message):
         return
 
     if getnotes["type"] == Types.TEXT:
-        teks = getnotes.get("value")
-        if teks:
+        if teks := getnotes.get("value"):
             await m.edit_text(teks)
     elif getnotes["type"] in (
         Types.STICKER,

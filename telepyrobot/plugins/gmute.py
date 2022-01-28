@@ -31,7 +31,7 @@ async def start_gmute(c: TelePyroBot, m: Message):
     try:
         db.gmute(user_id)
     except Exception as e:
-        await m.edit_text(f"<b>Error:</b>\n\n{str(e)}")
+        await m.edit_text(f'<b>Error:</b>\n\n{e}')
     else:
         await m.edit_text("`Successfully gmuted that person`")
         await c.send_message(
@@ -54,7 +54,7 @@ async def end_gmute(c: TelePyroBot, m: Message):
     try:
         db.ungmute(user_id)
     except Exception as e:
-        await m.edit_text(f"<b>Error:</b>\n\n{str(e)}")
+        await m.edit_text(f'<b>Error:</b>\n\n{e}')
     else:
         await m.edit_text("`Successfully ungmuted that person`")
         await c.send_message(

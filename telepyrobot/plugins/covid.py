@@ -43,7 +43,5 @@ async def covid(c: TelePyroBot, m: Message):
         ac.add_row(["Tests", f"{r['tests']:,}"])
         ac.add_row(["Tests/Million", f"{r['testsPerOneMillion']:,}"])
         ac.align = "l"
-        await m.edit_text(
-            f"`{str(ac)}`\nLast updated on: {last_updated}", parse_mode="md"
-        )
+        await m.edit_text(f'`{ac}`\nLast updated on: {last_updated}', parse_mode="md")
     return

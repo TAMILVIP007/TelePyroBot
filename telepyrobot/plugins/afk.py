@@ -103,7 +103,7 @@ async def afk_mentioned(c: TelePyroBot, m: Message):
             datime_since_afk = now - afk_time
             time_of_akf = float(datime_since_afk.seconds)
             days = time_of_akf // (24 * 3600)
-            time_of_akf = time_of_akf % (24 * 3600)
+            time_of_akf %= 24 * 3600
             hours = time_of_akf // 3600
             time_of_akf %= 3600
             minutes = time_of_akf // 60
@@ -127,11 +127,7 @@ async def afk_mentioned(c: TelePyroBot, m: Message):
             else:
                 afk_since = f"`{int(seconds)}s` **ago**"
 
-        if "-" in str(m.chat.id):
-            cid = str(m.chat.id)[4:]
-        else:
-            cid = str(m.chat.id)
-
+        cid = str(m.chat.id)[4:] if "-" in str(m.chat.id) else str(m.chat.id)
         if cid in list(AFK_RESTIRECT) and int(AFK_RESTIRECT[cid]) >= int(time.time()):
             return
         AFK_RESTIRECT[cid] = int(time.time()) + DELAY_TIME
@@ -150,26 +146,21 @@ async def afk_mentioned(c: TelePyroBot, m: Message):
                         mention_markdown(OWNER_NAME, OWNER_ID), get["reason"]
                     )
                 )
+        elif total_afk_time:
+            await m.reply_text(
+                "Sorry, My Master {} is AFK right now!\n\nAFK Since:{}".format(
+                    mention_markdown(OWNER_NAME, OWNER_ID), total_afk_time
+                )
+            )
         else:
-            if total_afk_time:
-                await m.reply_text(
-                    "Sorry, My Master {} is AFK right now!\n\nAFK Since:{}".format(
-                        mention_markdown(OWNER_NAME, OWNER_ID), total_afk_time
-                    )
+            await m.reply_text(
+                "Sorry, My Master {} is AFK right now!".format(
+                    mention_markdown(OWNER_NAME, OWNER_ID)
                 )
-            else:
-                await m.reply_text(
-                    "Sorry, My Master {} is AFK right now!".format(
-                        mention_markdown(OWNER_NAME, OWNER_ID)
-                    )
-                )
+            )
 
         _, message_type = get_message_type(m)
-        if message_type == Types.TEXT:
-            text = m.text if m.text else m.caption
-        else:
-            text = message_type.name
-
+        text = m.text or m.caption if message_type == Types.TEXT else message_type.name
         MENTIONED.append(
             {
                 "user": m.from_user.first_name,

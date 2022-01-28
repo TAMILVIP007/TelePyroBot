@@ -22,8 +22,7 @@ async def google_s(c: TelePyroBot, m: Message):
     sample_url = "https://da.gd/s?url=https://lmgtfy.com/?q={}%26iie=1".format(
         input_str.replace(" ", "+")
     )
-    response_api = requests.get(sample_url).text
-    if response_api:
+    if response_api := requests.get(sample_url).text:
         await m.edit_text(
             f"[{input_str}]({response_api.rstrip()})\n`Thank me Later 🙃` "
         )

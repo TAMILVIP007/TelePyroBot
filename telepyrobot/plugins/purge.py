@@ -45,7 +45,7 @@ async def purge(c: TelePyroBot, m: Message):
                 )
                 count_del_etion_s += len(message_ids)
                 message_ids = []
-        if len(message_ids) > 0:
+        if message_ids:
             await c.delete_messages(
                 chat_id=m.chat.id, message_ids=message_ids, revoke=True
             )

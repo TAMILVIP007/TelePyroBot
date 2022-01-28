@@ -134,10 +134,7 @@ async def jsonify(c: TelePyroBot, m: Message):
     the_real_message = None
     reply_to_id = None
 
-    if m.reply_to_message:
-        the_real_message = m.reply_to_message
-    else:
-        the_real_message = m
+    the_real_message = m.reply_to_message or m
     try:
         await m.reply_text(f"<code>{the_real_message}</code>")
     except Exception as e:

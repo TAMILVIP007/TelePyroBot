@@ -26,29 +26,19 @@ async def translate(c: TelePyroBot, m: Message):
             await m.edit_text("Usage: Reply to a message, then `tr <lang>`")
             return
         target = m.text.split()[1]
-        if m.reply_to_message.text:
-            text = m.reply_to_message.text
-        else:
-            text = m.reply_to_message.caption
-        detectlang = trl.detect(text)
-        try:
-            tekstr = trl.translate(text, dest=target)
-        except ValueError as err:
-            await m.edit_text(f"Error: `{str(err)}`")
-            return
+        text = m.reply_to_message.text or m.reply_to_message.caption
     else:
         if len(m.text.split()) <= 2:
             await m.edit_text("Usage: `tr <lang> <text>`")
             return
         target = m.text.split(None, 2)[1]
         text = m.text.split(None, 2)[2]
-        detectlang = trl.detect(text)
-        try:
-            tekstr = trl.translate(text, dest=target)
-        except ValueError as err:
-            await m.edit_text(f"Error: `{str(err)}`")
-            return
-
+    detectlang = trl.detect(text)
+    try:
+        tekstr = trl.translate(text, dest=target)
+    except ValueError as err:
+        await m.edit_text(f'Error: `{err}`')
+        return
     await m.edit_text(
         f"Translated from `{detectlang.lang}` to `{target}`:\n`{tekstr.text}`"
     )

@@ -45,8 +45,8 @@ async def restart(c: TelePyroBot, m: Message):
 async def dynostats(c: TelePyroBot, m: Message):
     msg = await m.reply_text("Processing...!\n")
 
-    u_id = Heroku.account().id
     if HEROKU_API_KEY is not None:
+        u_id = Heroku.account().id
         headers = {
             "User-Agent": useragent,
             "Authorization": f"Bearer {HEROKU_API_KEY}",

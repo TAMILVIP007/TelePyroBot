@@ -36,7 +36,6 @@ async def promote_usr(c: TelePyroBot, m: Message):
     is_admin = await admin_check(c, m)
     if not is_admin:
         return
-        return
     user_id, user_first_name = await extract_user(m)
     try:
         await m.chat.promote_member(
@@ -74,7 +73,6 @@ async def demote_usr(c: TelePyroBot, m: Message):
     await m.edit_text("`Trying to Demote user...`")
     is_admin = await admin_check(c, m)
     if not is_admin:
-        return
         return
     user_id, user_first_name = await extract_user(m)
     try:
@@ -176,7 +174,6 @@ async def unrestrict_usr(c: TelePyroBot, m: Message):
     await m.edit_text("`Trying to Unrestrict user...`")
     is_admin = await admin_check(c, m)
     if not is_admin:
-        return
         return
     user_id, user_first_name = await extract_user(m)
     try:

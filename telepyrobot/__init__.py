@@ -63,7 +63,7 @@ def load_cmds(ALL_PLUGINS):
         if not hasattr(imported_module, "__PLUGIN__"):
             imported_module.__PLUGIN__ = imported_module.__name__
 
-        if not imported_module.__PLUGIN__.lower() in HELP_COMMANDS:
+        if imported_module.__PLUGIN__.lower() not in HELP_COMMANDS:
             HELP_COMMANDS[imported_module.__PLUGIN__.lower()] = imported_module
         else:
             raise Exception(

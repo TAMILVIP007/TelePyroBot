@@ -29,7 +29,7 @@ async def tor_search(c: TelePyroBot, m: Message):
         f"https://api.sumanjay.cf/torrent/?query=ubuntu{query}"
     )
     ts = json.loads(response.text)
-    if not ts == response.json():
+    if ts != response.json():
         await m.edit_text("**Some error occured**\n`Try Again Later`")
         return
     listdata = ""
@@ -41,7 +41,7 @@ async def tor_search(c: TelePyroBot, m: Message):
             list1 = "<-----{}----->\nName: {}\nSeeders: {}\nSize: {}\nAge: {}\n<--Magnet Below-->\n{}\n\n\n".format(
                 run, r1["name"], r1["seeder"], r1["size"], r1["age"], r1["magnet"]
             )
-            listdata = listdata + list1
+            listdata += list1
         except:
             break
 
